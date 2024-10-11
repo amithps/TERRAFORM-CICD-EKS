@@ -1,5 +1,12 @@
-provider "aws" {
-  version = "5.70.0" 
-  region  = "ap-south-1"
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "< 5.71.0"
+    }
+  }
 }
 
+provider "aws" {
+  region = var.region
+}
