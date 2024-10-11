@@ -3,6 +3,13 @@
 
 sudo apt update
 sudo apt install openjdk-11-jre -y
+sudo apt update
+sudo apt install temurin-17-jdk -y
+update-alternatives --config java
+/usr/bin/java --version
+
+wget -qO - https://packages.adoptium.net/artifactory/api/gpg/key/public | sudo apt-key add -
+echo "deb https://packages.adoptium.net/artifactory/deb $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/adoptium.list
 
 # Jenkins installation 
 curl -fsSL https://pkg.jenkins.io/debian/jenkins.io-2023.key | sudo tee \
