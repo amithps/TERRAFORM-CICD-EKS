@@ -70,7 +70,7 @@ module "ec2_instance" {
   subnet_id                   = module.vpc.public_subnets[0]
   associate_public_ip_address = true
   availability_zone           = data.aws_availability_zones.azs.names[0]
-  user_data                   = file("jenkins-install.sh")
+  # user_data                   = file("jenkins-install.sh")
 
 
   tags = {
@@ -85,14 +85,14 @@ resource "null_resource" "name" {
   # ssh into the ec2 instance 
   connection {
     type        = "ssh"
-    user        = "ec2-user"
-    private_key = file("~/Downloads/awskeypair")
+    user        = "ubuntu"
+    private_key = file("~/Downloads/awskeypair.pem")
     host        = module.ec2_instance.public_ip
   }
 
   # copy the install_jenkins.sh file from your computer to the ec2 instance 
   provisioner "file" {
-    source      = "install_jenkins.sh"
+    source      = "E:/codes/TERRAFORM EKS/jenkins-server/jenkins-install.sh"
     destination = "/tmp/install_jenkins.sh"
   }
 
@@ -111,5 +111,5 @@ resource "null_resource" "name" {
 
 # print the url of the jenkins server
 output "website_url" {
-  value = join("", ["http://", aws_instance.ec2_instance.public_dns, ":", "8080"])
+  value = join("", ["http://", module.ec2_instance.public_dns, ":", "8080"])
 }
