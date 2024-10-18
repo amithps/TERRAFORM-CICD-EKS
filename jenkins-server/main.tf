@@ -87,7 +87,7 @@ resource "null_resource" "name" {
     type        = "ssh"
     user        = "ec2-user"
     private_key = file("~/Downloads/awskeypair")
-    host        = aws_instance.ec2_instance.public_ip
+    host        = module.ec2_instance.public_ip
   }
 
   # copy the install_jenkins.sh file from your computer to the ec2 instance 
@@ -111,5 +111,5 @@ resource "null_resource" "name" {
 
 # print the url of the jenkins server
 output "website_url" {
-  value     = join ("", ["http://", aws_instance.ec2_instance.public_dns, ":", "8080"])
+  value = join("", ["http://", aws_instance.ec2_instance.public_dns, ":", "8080"])
 }
